@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
         "When using 1.0.0 it is not suggested to repeatedly use this expression due to performance issues.")
 @Examples({"broadcast definition of \"no\"",
         "set {_Window} to definition of \"window\"",
-        "add (definition of \"perhaps\") and (definition of \"maybe\") to {_notsure::*}"})
+        "add (definition of \"Perhaps\") and (definition of \"maybe\") to {_notsure::*}"})
 @Since("1.0.0")
 public class ExprDefinition extends SimpleExpression<String> {
 

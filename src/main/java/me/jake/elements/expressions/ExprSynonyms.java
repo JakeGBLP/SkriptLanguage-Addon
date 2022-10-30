@@ -27,7 +27,7 @@ import  java.util.regex.Pattern;
 @Description("Returns the Synonyms of a Word." +
         "Can't be set." +
         "When using 1.0.0 it is not suggested to repeatedly use this expression due to performance issues.")
-@Examples({"broadcast synonyms of \"Maybe\"",
+@Examples({"broadcast synonyms of \"maybe\"",
         "set {_AllYes::*} to synonyms of \"yes\""})
 @Since("1.0.0")
 public class ExprSynonyms extends SimpleExpression<String> {

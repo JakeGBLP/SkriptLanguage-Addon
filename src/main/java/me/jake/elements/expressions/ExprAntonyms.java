@@ -27,7 +27,7 @@ import  java.util.regex.Pattern;
 @Description("Returns the Antonyms of a Word." +
         "Can't be set." +
         "When using 1.0.0 it is not suggested to repeatedly use this expression due to performance issues.")
-@Examples({"broadcast antonyms of \"no\"",
+@Examples({"broadcast antonyms of \"No\"",
         "set {_NotWhites::*} to antonyms of \"white\""})
 @Since("1.0.0")
 public class ExprAntonyms extends SimpleExpression<String> {
