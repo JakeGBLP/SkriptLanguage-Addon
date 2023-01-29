@@ -37,6 +37,7 @@ public class EffDefinition extends AsyncEffect {
         Skript.registerEffect(EffDefinition.class, "(get|load) [the] definition of %string% and (store|save) [it] in %-objects%");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, @NotNull Kleenean kleenean, SkriptParser.@NotNull ParseResult parseResult) {
 
@@ -53,47 +54,47 @@ public class EffDefinition extends AsyncEffect {
     @Override
     protected void execute(@NotNull Event e) {
         String string = this.word.getSingle(e);
-        if (string != null) {
-            if (string.matches("^[A-Za-z]+$")) {
-                URL url;
-                try {
-                    url = new URL("https://api.dictionaryapi.dev/api/v2/entries/en/" + string);
-                } catch (MalformedURLException Event) {
-                    throw new RuntimeException(Event);
-                }
-                URLConnection con;
-                try {
-                    con = url.openConnection();
-                } catch (IOException Event) {
-                    throw new RuntimeException(Event);
-                }
-                InputStream is;
-                try {
-                    is = con.getInputStream();
-                } catch (IOException Event) {
-                    throw new RuntimeException(Event);
-                }
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                    String line;
-                    if ((line = br.readLine()) != null) {
-                        if ((line.contains("\"definitions\":[{\"definition\":\""))) {
-                            String[] splits = line.split(Pattern.quote("\"definitions\":[{\"definition\":\""));
-                            String[] moresplits = splits[1].split(Pattern.quote("\",\"synonyms"));
-                            String[] definition = new String[]{moresplits[0]};
-
-                            if (var != null) {
+        if (var != null) {
+            if (string != null) {
+                if (string.matches("^[A-Za-z]+$")) {
+                    URL url;
+                    try {
+                        url = new URL("https://api.dictionaryapi.dev/api/v2/entries/en/" + string);
+                    } catch (MalformedURLException Event) {
+                        throw new RuntimeException(Event);
+                    }
+                    URLConnection con;
+                    try {
+                        con = url.openConnection();
+                    } catch (IOException Event) {
+                        throw new RuntimeException(Event);
+                    }
+                    InputStream is;
+                    try {
+                        is = con.getInputStream();
+                    } catch (IOException Event) {
+                        throw new RuntimeException(Event);
+                    }
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+                        String line;
+                        if ((line = br.readLine()) != null) {
+                            if ((line.contains("\"definitions\":[{\"definition\":\""))) {
+                                String[] splits = line.split(Pattern.quote("\"definitions\":[{\"definition\":\""));
+                                String[] moreSplits = splits[1].split(Pattern.quote("\",\"synonyms"));
+                                String[] definition = new String[]{moreSplits[0]};
                                 var.change(e, definition, Changer.ChangeMode.SET);
+
                             }
                         }
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
                 }
             }
         }
     }
     @Override
-    public @NotNull String toString(@Nullable Event e, boolean debug) {
+    public String toString(@Nullable Event e, boolean debug) {
         return null;
     }
 }

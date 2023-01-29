@@ -37,6 +37,7 @@ public class EffSynonyms extends AsyncEffect {
         Skript.registerEffect(EffSynonyms.class, "(get|load) [the] synonym[s] of %string% and (store|save) [(it|them)] in %-objects%");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, @NotNull Kleenean kleenean, SkriptParser.@NotNull ParseResult parseResult) {
 
@@ -53,51 +54,51 @@ public class EffSynonyms extends AsyncEffect {
     @Override
     protected void execute(@NotNull Event e) {
         String string = this.word.getSingle(e);
-        if (string != null) {
-            if (string.matches("^[A-Za-z]+$")) {
-                URL url;
-                try {
-                    url = new URL("https://api.dictionaryapi.dev/api/v2/entries/en/" + string);
-                } catch (MalformedURLException Event) {
-                    throw new RuntimeException(Event);
-                }
-                URLConnection con;
-                try {
-                    con = url.openConnection();
-                } catch (IOException Event) {
-                    throw new RuntimeException(Event);
-                }
-                InputStream is;
-                try {
-                    is = con.getInputStream();
-                } catch (IOException Event) {
-                    throw new RuntimeException(Event);
-                }
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                    String line;
-                    if ((line = br.readLine()) != null) {
-                        if ((line.contains("\"synonyms\":[\""))) {
-                            String[] splits = line.split(Pattern.quote("\"synonyms\":[\""));
-                            String[] moresplits = splits[1].split(Pattern.quote("]"));
-                            String noquotes = moresplits[0].replaceAll("\"", "");
-                            String[] synonyms = noquotes.split(",");
-
-                            if (var != null) {
+        if (var != null) {
+            if (string != null) {
+                if (string.matches("^[A-Za-z]+$")) {
+                    URL url;
+                    try {
+                        url = new URL("https://api.dictionaryapi.dev/api/v2/entries/en/" + string);
+                    } catch (MalformedURLException Event) {
+                        throw new RuntimeException(Event);
+                    }
+                    URLConnection con;
+                    try {
+                        con = url.openConnection();
+                    } catch (IOException Event) {
+                        throw new RuntimeException(Event);
+                    }
+                    InputStream is;
+                    try {
+                        is = con.getInputStream();
+                    } catch (IOException Event) {
+                        throw new RuntimeException(Event);
+                    }
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+                        String line;
+                        if ((line = br.readLine()) != null) {
+                            if ((line.contains("\"synonyms\":[\""))) {
+                                String[] splits = line.split(Pattern.quote("\"synonyms\":[\""));
+                                String[] moreSplits = splits[1].split(Pattern.quote("]"));
+                                String noQuotes = moreSplits[0].replaceAll("\"", "");
+                                String[] synonyms = noQuotes.split(",");
                                 var.change(e, synonyms, Changer.ChangeMode.SET);
+
                             }
                         }
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
                     }
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+
                 }
 
             }
-
         }
     }
 
     @Override
-    public @NotNull String toString(@Nullable Event e, boolean debug) {
+    public String toString(@Nullable Event e, boolean debug) {
         return null;
     }
 }
