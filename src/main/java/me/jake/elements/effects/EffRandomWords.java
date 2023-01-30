@@ -76,7 +76,6 @@ public class EffRandomWords extends AsyncEffect {
         }
         return true;
     }
-
     @Override
     protected void execute(@NotNull Event e) {
         if (var != null) {

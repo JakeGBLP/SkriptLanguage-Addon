@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import me.jake.utils.AddonUtils;
 import me.jake.utils.ConfigManager;
 public class Commands implements CommandExecutor, Listener {
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         ConfigManager.setStoredConfig(ConfigManager.getConfig());

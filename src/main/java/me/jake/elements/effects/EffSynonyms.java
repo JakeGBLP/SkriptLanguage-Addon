@@ -40,14 +40,12 @@ public class EffSynonyms extends AsyncEffect {
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, @NotNull Kleenean kleenean, SkriptParser.@NotNull ParseResult parseResult) {
-
         word = (Expression<String>) expressions[0];
         if (expressions[1] instanceof Variable<?>) {
             var = (Variable<?>) expressions[1];
         } else {
             Skript.error("You can only save synonyms in variables!");
         }
-
         return true;
     }
 
@@ -84,15 +82,12 @@ public class EffSynonyms extends AsyncEffect {
                                 String noQuotes = moreSplits[0].replaceAll("\"", "");
                                 String[] synonyms = noQuotes.split(",");
                                 var.change(e, synonyms, Changer.ChangeMode.SET);
-
                             }
                         }
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-
                 }
-
             }
         }
     }

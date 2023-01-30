@@ -83,7 +83,6 @@ public class EffDefinition extends AsyncEffect {
                                 String[] moreSplits = splits[1].split(Pattern.quote("\",\"synonyms"));
                                 String[] definition = new String[]{moreSplits[0]};
                                 var.change(e, definition, Changer.ChangeMode.SET);
-
                             }
                         }
                     } catch (IOException ex) {

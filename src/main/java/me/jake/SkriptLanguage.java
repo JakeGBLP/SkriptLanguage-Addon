@@ -33,7 +33,6 @@ public final class SkriptLanguage extends JavaPlugin implements Listener {
         Bukkit.getLogger().info("[SkriptLanguage] has been enabled!");
     }
 
-
     public SkriptAddon getAddonInstance() {
         return addon;
     }

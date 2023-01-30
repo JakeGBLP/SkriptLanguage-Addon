@@ -50,7 +50,6 @@ public class EffAntonyms extends AsyncEffect {
 
         return true;
     }
-
     @Override
     protected void execute(@NotNull Event e) {
         String string = this.word.getSingle(e);

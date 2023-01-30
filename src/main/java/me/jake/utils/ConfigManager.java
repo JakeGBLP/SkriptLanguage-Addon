@@ -53,7 +53,6 @@ public class ConfigManager {
         }
     }
 
-
     public static @NotNull File getConfig() {
         return Path.of(getPluginFolder(pluginName)+"\\"+"config.yml").toFile();
     }
@@ -72,7 +71,6 @@ public class ConfigManager {
         }
         return null;
     }
-
     public static Boolean getBoolean(@NotNull List<String> lines, String name) throws IOException {
         for (String line : lines) {
             if (!line.startsWith("#")) {
@@ -83,7 +81,6 @@ public class ConfigManager {
         }
         return null;
     }
-
     public void setBoolean(@NotNull File file, String name, Boolean value) throws IOException {
         List<String> lines = Files.readAllLines(file.toPath());
         int index = -1;
